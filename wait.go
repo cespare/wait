@@ -15,18 +15,7 @@ type Group struct {
 
 // Go runs f in a new goroutine.
 func (g *Group) Go(f func() error) {
-	g.wg.Add(1)
-	go func() {
-		err := f()
-		if err != nil {
-			g.mu.Lock()
-			if g.err == nil {
-				g.err = err
-			}
-			g.mu.Unlock()
-		}
-		g.wg.Done()
-	}()
+	g.GoQuit(func(_ <-chan struct{}) error { return f() })
 }
 
 // GoQuit runs f in a new goroutine.
