@@ -44,7 +44,7 @@ func (g *Group) Go(f func(quit <-chan struct{}) error) {
 	}()
 }
 
-// Quit asks all goroutines started with GoQuit to exit
+// Quit asks all goroutines started with Go to exit
 // (by closing the quit chan given to each function).
 // After the first call to Quit, subsequent calls have no effect.
 func (g *Group) Quit() {
