@@ -14,15 +14,10 @@ type Group struct {
 }
 
 // Go runs f in a new goroutine.
-func (g *Group) Go(f func() error) {
-	g.GoQuit(func(_ <-chan struct{}) error { return f() })
-}
-
-// GoQuit runs f in a new goroutine.
 // The quit chan is closed to indicate that f should exit early,
 // so f is expected to periodically receive from quit
 // and immediately return nil if a value arrives.
-func (g *Group) GoQuit(f func(quit <-chan struct{}) error) {
+func (g *Group) Go(f func(quit <-chan struct{}) error) {
 	g.mu.Lock()
 	if g.quit == nil {
 		g.quit = make(chan struct{})
