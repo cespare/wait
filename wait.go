@@ -49,7 +49,7 @@ func (g *Group) Go(f func(quit <-chan struct{}) error) {
 // After the first call to Quit, subsequent calls have no effect.
 func (g *Group) Quit() {
 	g.mu.Lock()
-	if !g.closed {
+	if !g.closed && g.quit != nil {
 		close(g.quit)
 		g.closed = true
 	}
