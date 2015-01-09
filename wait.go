@@ -8,6 +8,7 @@ import "sync"
 // get the first error that was seen.
 // Cooperative cancellation is also supported via Quit
 // and the broadcast chan passed to each goroutine.
+// The zero value of Group is ready to be used.
 type Group struct {
 	wg     sync.WaitGroup
 	mu     sync.Mutex
