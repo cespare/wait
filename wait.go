@@ -4,7 +4,10 @@ package wait
 import "sync"
 
 // A Group waits for a collection of goroutines to exit.
-// It tracks the error result of each goroutine.
+// With Wait, one may wait for all goroutines to exit and
+// get the first error that was seen.
+// Cooperative cancellation is also supported via Quit
+// and the broadcast chan passed to each goroutine.
 type Group struct {
 	wg     sync.WaitGroup
 	mu     sync.Mutex
@@ -17,6 +20,7 @@ type Group struct {
 // The quit chan is closed to indicate that f should exit early,
 // so f is expected to periodically receive from quit
 // and immediately return nil if a value arrives.
+// Quit is called automatically if f returns a non-nil error.
 func (g *Group) Go(f func(quit <-chan struct{}) error) {
 	g.mu.Lock()
 	if g.quit == nil {
@@ -33,6 +37,7 @@ func (g *Group) Go(f func(quit <-chan struct{}) error) {
 				g.err = err
 			}
 			g.mu.Unlock()
+			g.Quit()
 		}
 		g.wg.Done()
 	}()
