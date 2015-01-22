@@ -1,8 +1,8 @@
 # wait
 
-wait is a Go package that provides `Group`, an extended version of `sync.WaitGroup`.
+[![GoDoc](https://godoc.org/github.com/cespare/wait?status.svg)](https://godoc.org/github.com/cespare/wait)
 
-[GoDoc](https://godoc.org/github.com/cespare/wait)
+wait is a Go package that provides `Group`, an extended version of `sync.WaitGroup`.
 
 wait is similar to two other packages of which I'm aware:
 
