@@ -1,4 +1,6 @@
 // Package wait provides Group, an extended version of sync.WaitGroup.
+//
+// Deprecated: Use golang.org/x/sync/errgroup instead.
 package wait
 
 import "sync"
